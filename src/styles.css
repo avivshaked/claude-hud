@@ -1,0 +1,129 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+  --bg: rgba(18, 18, 24, 0.88);
+  --bg-solid: #121218;
+  --fg: #e6e6ee;
+  --muted: #8a8aa0;
+  --border: rgba(255, 255, 255, 0.08);
+  --green: #4ade80;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --accent: #a78bfa;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  color: var(--fg);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  -webkit-app-region: drag;
+}
+
+.hud__row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hud__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.hud__label .name { font-weight: 600; color: var(--fg); text-transform: uppercase; font-size: 10px; }
+.hud__label .pct  { font-variant-numeric: tabular-nums; }
+
+.bar {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar__fill {
+  height: 100%;
+  transition: width 600ms ease, background-color 400ms ease;
+  border-radius: 3px;
+}
+.bar__fill--green { background: var(--green); }
+.bar__fill--amber { background: var(--amber); }
+.bar__fill--red   { background: var(--red); }
+
+.countdown {
+  font-size: 10px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.hud__footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: var(--muted);
+  -webkit-app-region: no-drag;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.status-dot--ok   { background: var(--green); }
+.status-dot--stale { background: var(--amber); }
+.status-dot--err  { background: var(--red); }
+
+.full {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sparkline {
+  width: 100%;
+  height: 48px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+}
+
+.error-box {
+  font-size: 11px;
+  color: var(--red);
+  line-height: 1.35;
+}
+.error-box code {
+  background: rgba(255,255,255,0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
