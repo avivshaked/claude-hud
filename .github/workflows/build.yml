@@ -14,12 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Universal binary: arm64 + x86_64 lipo'd together. Runs natively on
+          # both Apple Silicon and Intel Macs without queueing on the scarce
+          # macos-13 runner pool.
           - platform: macos-latest
-            rust_target: aarch64-apple-darwin
-            tauri_args: '--target aarch64-apple-darwin'
-          - platform: macos-13
-            rust_target: x86_64-apple-darwin
-            tauri_args: '--target x86_64-apple-darwin'
+            rust_target: aarch64-apple-darwin,x86_64-apple-darwin
+            tauri_args: '--target universal-apple-darwin'
           - platform: windows-latest
             rust_target: ''
             tauri_args: ''
