@@ -14,12 +14,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: macos-latest        # Apple Silicon
-            args: '--target aarch64-apple-darwin'
-          - platform: macos-13            # Intel
-            args: '--target x86_64-apple-darwin'
+          - platform: macos-latest
+            rust_target: aarch64-apple-darwin
+            tauri_args: '--target aarch64-apple-darwin'
+          - platform: macos-13
+            rust_target: x86_64-apple-darwin
+            tauri_args: '--target x86_64-apple-darwin'
           - platform: windows-latest
-            args: ''
+            rust_target: ''
+            tauri_args: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -39,7 +42,7 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin' || matrix.platform == 'macos-13' && 'x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.rust_target }}
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
@@ -55,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}-dev', github.run_number) }}
-          releaseName: 'claude-hud ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}-dev', github.run_number) }}'
+          releaseName: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}-dev', github.run_number) }}
           releaseDraft: true
           prerelease: ${{ github.ref_type != 'tag' }}
-          args: ${{ matrix.args }}
+          args: ${{ matrix.tauri_args }}
