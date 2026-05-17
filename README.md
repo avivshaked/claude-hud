@@ -86,8 +86,9 @@ src/
 
 - **No OAuth refresh flow.** When the access token expires the HUD shows a
   "sign in" state and asks you to run `claude` from a terminal to re-auth.
-- **Windows only for now.** The Rust code is portable, but icons / bundling /
-  hotkey defaults are tuned for Windows.
+- **macOS build is untested.** CI ships a universal DMG, but it has not yet
+  been run on an actual Mac — icons, hotkey defaults, and tray behavior were
+  tuned on Windows. If you try it on macOS and hit issues, please open one.
 - **Single account.** No multi-account switching.
 - **Endpoint is unofficial.** If Anthropic ships a documented one, swap it in
   inside `usage_client.rs`.
@@ -103,5 +104,5 @@ src/
 
 - OAuth token refresh.
 - Agent-coordination data source (same plumbing as usage — different endpoint).
-- macOS / Linux builds.
+- Actually test the macOS build; Linux build.
 - Click-through mode (mouse passes through the HUD when not focused).
