@@ -62,3 +62,17 @@ jobs:
           releaseDraft: true
           prerelease: ${{ github.ref_type != 'tag' }}
           args: ${{ matrix.tauri_args }}
+
+  release-notes:
+    # Regenerate the release body from GitHub's auto-derived commit log.
+    # Runs once after all matrix builds, only on real tag pushes.
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Generate release notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release edit "${{ github.ref_name }}" --generate-notes --repo "${{ github.repository }}"
